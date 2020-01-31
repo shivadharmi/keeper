@@ -22,9 +22,6 @@ class Home extends React.Component {
 	deleteNote = id => {
 		this.props.deleteNote(id);
 	};
-	componentDidUpdate() {
-		this.props.fetchNotes();
-	}
 	render() {
 		return (
 			<div>

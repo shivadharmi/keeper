@@ -25,17 +25,20 @@ router.post('/submitNote', async (req, res) => {
 		content: req.body.content,
 		profileId: req.user.profileId
 	});
-
 	note = await note.save().catch(e => console.log(e));
-	res.send(note);
+	const notes = await Note.find({ profileId: req.user.profileId }).catch(e =>
+		console.log(e)
+	);
+	res.send(notes);
 });
 
 router.delete('/deleteNote/:id', async (req, res) => {
 	const id = req.params.id;
-	console.log(id);
 	const response = await Note.deleteOne({ _id: id }).catch(e => console.log(e));
-	console.log(response);
-	res.send(response);
+	const notes = await Note.find({ profileId: req.user.profileId }).catch(e =>
+		console.log(e)
+	);
+	res.send(notes);
 });
 
 module.exports = router;
