@@ -34,10 +34,6 @@ app.use(passport.session());
 app.use('/auth/google', authRoutes);
 app.use('/api', apiRoutes);
 
-app.get('/', (req, res) => {
-	res.send('server started');
-});
-
 if (process.env.NODE_ENV === 'production') {
 	// It will try to serve the file required by use of the below
 	// line of the code(express.satatic) and if it doesn't find the file
