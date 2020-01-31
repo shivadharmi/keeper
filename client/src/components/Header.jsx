@@ -1,10 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { authAction } from '../actions/index';
+import history from '../history';
 
 import HighlightIcon from '@material-ui/icons/Highlight';
+import Button from '@material-ui/core/Button';
 import GoogleButton from './GoogleButton';
 
 class Header extends React.Component {
+	componentDidMount() {
+		this.props.authAction();
+	}
 	renderContent() {
 		switch (this.props.auth) {
 			case false:
@@ -20,10 +27,20 @@ class Header extends React.Component {
 	render() {
 		return (
 			<header style={{ position: 'relative' }}>
-				<h1 style={{ display: 'inline' }}>
+				<h1 style={{ display: 'inline' }} onClick={() => history.push('/')}>
 					<HighlightIcon />
 					Keeper
 				</h1>
+				{this.props.auth ? (
+					<Button
+						variant='contained'
+						color='primary'
+						style={{ position: 'absolute', right: '150px' }}>
+						<Link to='/home' style={{ textDecoration: 'none', color: '#fff' }}>
+							Home
+						</Link>
+					</Button>
+				) : null}
 				{this.renderContent()}
 			</header>
 		);
@@ -34,4 +51,4 @@ const mapStateToProps = state => {
 		auth: state.auth
 	};
 };
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { authAction })(Header);
